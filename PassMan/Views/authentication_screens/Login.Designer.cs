@@ -79,7 +79,7 @@
             button1.BackColor = Color.LimeGreen;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(41, 194);
+            button1.Location = new Point(41, 200);
             button1.Name = "button1";
             button1.Size = new Size(176, 37);
             button1.TabIndex = 4;
@@ -92,7 +92,7 @@
             registerBtn.BackColor = Color.IndianRed;
             registerBtn.FlatStyle = FlatStyle.Flat;
             registerBtn.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            registerBtn.Location = new Point(318, 194);
+            registerBtn.Location = new Point(318, 200);
             registerBtn.Name = "registerBtn";
             registerBtn.Size = new Size(176, 37);
             registerBtn.TabIndex = 5;
