@@ -80,6 +80,10 @@ namespace PassMan.Desktop.Views
 
             if (selectedIndex >= 0)
             {
+                if(dataGridView1.Rows[selectedIndex].Cells[0].Value == null)
+                {
+                    return;
+                }
                 // Le kell kérni a kijelölt sor adatait
                 string username = dataGridView1.Rows[selectedIndex].Cells[0].Value.ToString();
                 string password = dataGridView1.Rows[selectedIndex].Cells[1].Value.ToString();
@@ -102,6 +106,7 @@ namespace PassMan.Desktop.Views
                 authManager.dao.RemoveVaultEntry(authManager.loggedUser, vaultToDelete);
                 // Töröld a kijelölt sort a DataGridView-ből
                 dataGridView1.Rows.RemoveAt(selectedIndex);
+                MessageBox.Show("Sikeres törlés","Törlés", MessageBoxButtons.OK, MessageBoxIcon.Information );
             }
         }
 

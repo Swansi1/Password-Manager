@@ -22,6 +22,8 @@ namespace PassMan
         public AuthManager manager;
         private void Form1_Load(object sender, EventArgs e)
         {
+            manager = new AuthManager();
+
             // test for sqlite
             //Debug.WriteLine("MOST AJTK LÉASJGFKLAJGFKLÉSAJGLÉSKAGFJKLSJKLGÉLKA");
             //using (var context = new MyDbContext())
@@ -88,7 +90,6 @@ namespace PassMan
             String username = usernameTextBox.Text;
             String password = passwordTextBox.Text;
 
-            AuthManager manager = new AuthManager();
             var user = new User
             {
                 Username = username,

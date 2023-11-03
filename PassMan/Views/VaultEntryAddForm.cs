@@ -23,6 +23,11 @@ namespace PassMan.Desktop.Views
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            if(websiteTxb.Text.Trim().Length == 0 || usernameTxb.Text.Trim().Length == 0 || passwordTxb.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Nem lehet üres mezőket megadni!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             WebsiteValue = websiteTxb.Text;
             UsernameValue = usernameTxb.Text;
             PasswordValue = passwordTxb.Text;

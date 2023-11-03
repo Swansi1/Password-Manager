@@ -13,6 +13,14 @@ namespace PassMan.Core.DAO
 {
     public class UserDAO
     {
+
+        public UserDAO() {
+            using (var context = new MyDbContext())
+            {
+                context.Database.EnsureCreated();
+            }
+        }
+
         public List<User> GetAllUsers()
         {
             using (var context = new MyDbContext())
