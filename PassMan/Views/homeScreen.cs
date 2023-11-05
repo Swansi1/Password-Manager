@@ -20,6 +20,7 @@ namespace PassMan.Desktop.Views
         {
             InitializeComponent();
 
+
             this.authManager = manager;
 
 
@@ -34,6 +35,8 @@ namespace PassMan.Desktop.Views
                     encType.Secret = vault.Password;
                     dataGridView1.Rows.Add(vault.Name, encType.Decrypt().Secret, vault.Website, vault.Id);
                 }
+                dataGridView1.Columns["NameField"].SortMode = DataGridViewColumnSortMode.Automatic; // sort
+
             }
             //dataGridView1.Columns["Name"].HeaderText = "Név";
         }
@@ -80,7 +83,7 @@ namespace PassMan.Desktop.Views
 
             if (selectedIndex >= 0)
             {
-                if(dataGridView1.Rows[selectedIndex].Cells[0].Value == null)
+                if (dataGridView1.Rows[selectedIndex].Cells[0].Value == null)
                 {
                     return;
                 }
@@ -106,13 +109,18 @@ namespace PassMan.Desktop.Views
                 authManager.dao.RemoveVaultEntry(authManager.loggedUser, vaultToDelete);
                 // Töröld a kijelölt sort a DataGridView-ből
                 dataGridView1.Rows.RemoveAt(selectedIndex);
-                MessageBox.Show("Sikeres törlés","Törlés", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                MessageBox.Show("Sikeres törlés", "Törlés", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void homeScreen_Load(object sender, EventArgs e)
         {
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
         }
     }
 }

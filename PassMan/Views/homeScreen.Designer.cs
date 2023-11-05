@@ -49,6 +49,7 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(505, 296);
             dataGridView1.TabIndex = 0;
+            dataGridView1.ColumnHeaderMouseClick += dataGridView1_ColumnHeaderMouseClick;
             // 
             // NameField
             // 
