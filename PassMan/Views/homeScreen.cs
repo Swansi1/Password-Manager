@@ -16,6 +16,7 @@ namespace PassMan.Desktop.Views
     public partial class homeScreen : Form
     {
         private AuthManager authManager;
+        private int selectedIndex = -1;
         public homeScreen(AuthManager manager)
         {
             InitializeComponent();
@@ -32,13 +33,20 @@ namespace PassMan.Desktop.Views
                 EncryptedType encType = new EncryptedType(authManager.loggedUser.Email, "a");
                 foreach (var vault in authManager.loggedUser.VaultEntries)
                 {
-                    encType.Secret = vault.Password;
-                    dataGridView1.Rows.Add(vault.Name, encType.Decrypt().Secret, vault.Website, vault.Id);
+                    try
+                    {
+                        // ha a Decrypt() rossz akkor csak írja ki, akkor fordulhat elő ha nem titkosítva lett mentve
+                        encType.Secret = vault.Password;
+                        dataGridView1.Rows.Add(vault.Name, encType.Decrypt().Secret, vault.Website, vault.Id);
+                    }
+                    catch (Exception)
+                    {
+                        dataGridView1.Rows.Add(vault.Name, vault.Password, vault.Website, vault.Id);
+                    }
                 }
                 dataGridView1.Columns["NameField"].SortMode = DataGridViewColumnSortMode.Automatic; // sort
 
             }
-            //dataGridView1.Columns["Name"].HeaderText = "Név";
         }
 
 
@@ -70,16 +78,7 @@ namespace PassMan.Desktop.Views
 
         private void deleteVaultBtn_Click(object sender, EventArgs e)
         {
-            int selectedIndex = -1;
-            if (dataGridView1.SelectedRows.Count > 0)
-            {
-                // ha az egész sor ki van jelölve
-                selectedIndex = dataGridView1.SelectedRows[0].Index;
-            }
-            if (dataGridView1.SelectedCells.Count == 1)
-            {
-                selectedIndex = dataGridView1.SelectedCells[0].RowIndex;
-            }
+            updateCurrentDataGridViewSelectedCell();
 
             if (selectedIndex >= 0)
             {
@@ -95,7 +94,7 @@ namespace PassMan.Desktop.Views
 
                 // Most már rendelkezel a sor adataival, és használhatod vagy mentheted őket
                 Debug.WriteLine(username);
-                Debug.WriteLine(password); // TODO jelszót kódolni kell!
+                Debug.WriteLine(password); // jelszót kódolni kell!
                 Debug.WriteLine(website);
                 Debug.WriteLine("==================");
                 VaultEntry vaultToDelete = new VaultEntry();
@@ -118,9 +117,71 @@ namespace PassMan.Desktop.Views
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private int updateCurrentDataGridViewSelectedCell()
         {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                // ha az egész sor ki van jelölve
+                selectedIndex = dataGridView1.SelectedRows[0].Index;
+            }
+            if (dataGridView1.SelectedCells.Count == 1)
+            {
+                selectedIndex = dataGridView1.SelectedCells[0].RowIndex;
+            }
 
+            return selectedIndex;
+        }
+
+        private void modifyBtn_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("LEFUTOTT");
+            updateCurrentDataGridViewSelectedCell();
+            int currentEditRow = selectedIndex;
+            if (selectedIndex >= 0)
+            {
+                if (dataGridView1.Rows[selectedIndex].Cells[0].Value == null)
+                {
+                    return;
+                }
+                // Le kell kérni a kijelölt sor adatait
+                string username = dataGridView1.Rows[selectedIndex].Cells[0].Value.ToString();
+                string password = dataGridView1.Rows[selectedIndex].Cells[1].Value.ToString();
+                string website = dataGridView1.Rows[selectedIndex].Cells[2].Value.ToString();
+                string id = dataGridView1.Rows[selectedIndex].Cells[3].Value.ToString();
+
+                VaultEntryModifyForm addDataForm = new VaultEntryModifyForm();
+                addDataForm.WebsiteValue = website;
+                addDataForm.PasswordValue = password;
+                addDataForm.UsernameValue = username;
+                addDataForm.vaultId = id;
+
+
+
+                if (addDataForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Az űrlapról visszaadott adatok hozzáadása a DataGridView-hez
+                    string webModify = addDataForm.WebsiteValue;
+                    string usernameModify = addDataForm.UsernameValue;
+                    string passwordModify = addDataForm.PasswordValue;
+
+                    VaultEntry modifyVault = new VaultEntry();
+                    modifyVault.Website = webModify;
+                    modifyVault.Name = usernameModify;
+                    EncryptedType enc = new EncryptedType(authManager.loggedUser.Email, passwordModify);
+                    modifyVault.Password = enc.Encrypt().Secret; // jelszó kódolva mentés
+
+                    modifyVault.Id = Convert.ToInt32(id);
+
+                    authManager.dao.EditVaultEntry(modifyVault);
+                    //Meg kell keresni a vault-ot id alapjáán majd edit & save
+                    // dataGridView update, de van Row idnkt!!
+                    dataGridView1.Rows[currentEditRow].Cells[0].Value = usernameModify;
+                    dataGridView1.Rows[currentEditRow].Cells[1].Value = passwordModify;
+                    dataGridView1.Rows[currentEditRow].Cells[2].Value = webModify;
+
+                    //dataGridView1.Rows.Add(username, password, website, newId);
+                }
+            }
         }
     }
 }

@@ -10,15 +10,22 @@ using System.Windows.Forms;
 
 namespace PassMan.Desktop.Views
 {
-    public partial class VaultEntryAddForm : Form
+    public partial class VaultEntryModifyForm : Form
     {
-        public string WebsiteValue { get; private set; }
-        public string UsernameValue { get; private set; }
-        public string PasswordValue { get; private set; }
+        public string WebsiteValue { get; set; }
+        public string UsernameValue { get; set; }
+        public string PasswordValue { get; set; }
+        public string vaultId { get; set; }
 
-        public VaultEntryAddForm()
+        public VaultEntryModifyForm()
         {
             InitializeComponent();
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -36,10 +43,11 @@ namespace PassMan.Desktop.Views
             Close();
         }
 
-        private void cancelBtn_Click(object sender, EventArgs e)
+        private void VaultEntryModifyForm_Load(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            websiteTxb.Text = WebsiteValue;
+            usernameTxb.Text = UsernameValue;
+            passwordTxb.Text = PasswordValue;
         }
     }
 }
