@@ -76,5 +76,22 @@ namespace PassMan.Core.DAO
                 }
             }
         }
+        public void EditVaultEntry(VaultEntry vaultEntry)
+        {
+            using (var context = new MyDbContext())
+            {
+                var existingVaultEntry = context.VaultEntries.FirstOrDefault(ve => ve.Id == vaultEntry.Id);
+
+                if (existingVaultEntry != null)
+                {
+                    // Módosítjuk az adatokat
+                    existingVaultEntry.Name = vaultEntry.Name;
+                    existingVaultEntry.Password = vaultEntry.Password;
+                    existingVaultEntry.Website = vaultEntry.Website;
+
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }

@@ -101,7 +101,7 @@ namespace PassMan
             };
             if (manager.loginUser(user))
             {
-                homeScreen homeScreenForm = new homeScreen(manager); // todo ide kell beleírni, hogy mit adunk át
+                homeScreen homeScreenForm = new homeScreen(manager);
 
                 homeScreenForm.Show();
 
@@ -128,7 +128,6 @@ namespace PassMan
                 MessageBox.Show("Sikertelen regisztráció!", "Regisztráció", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-
         }
     }
 }

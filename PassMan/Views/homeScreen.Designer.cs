@@ -37,6 +37,7 @@
             deleteVaultBtn = new Button();
             label1 = new Label();
             label2 = new Label();
+            modifyBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -47,9 +48,8 @@
             dataGridView1.Location = new Point(25, 51);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(505, 296);
+            dataGridView1.Size = new Size(599, 296);
             dataGridView1.TabIndex = 0;
-            dataGridView1.ColumnHeaderMouseClick += dataGridView1_ColumnHeaderMouseClick;
             // 
             // NameField
             // 
@@ -93,7 +93,7 @@
             deleteVaultBtn.BackColor = Color.IndianRed;
             deleteVaultBtn.FlatStyle = FlatStyle.Flat;
             deleteVaultBtn.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            deleteVaultBtn.Location = new Point(388, 370);
+            deleteVaultBtn.Location = new Point(334, 370);
             deleteVaultBtn.Name = "deleteVaultBtn";
             deleteVaultBtn.Size = new Size(142, 40);
             deleteVaultBtn.TabIndex = 2;
@@ -115,17 +115,31 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(334, 413);
+            label2.Location = new Point(309, 413);
             label2.Name = "label2";
-            label2.Size = new Size(245, 19);
+            label2.Size = new Size(343, 19);
             label2.TabIndex = 4;
-            label2.Text = "Törléshez jelöld ki az adott cellát / sort!";
+            label2.Text = "Törléshez / módosításhoz jelöld ki az adott cellát / sort!";
+            // 
+            // modifyBtn
+            // 
+            modifyBtn.BackColor = Color.Orange;
+            modifyBtn.FlatStyle = FlatStyle.Flat;
+            modifyBtn.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            modifyBtn.Location = new Point(482, 370);
+            modifyBtn.Name = "modifyBtn";
+            modifyBtn.Size = new Size(142, 40);
+            modifyBtn.TabIndex = 5;
+            modifyBtn.Text = "Módosítás";
+            modifyBtn.UseVisualStyleBackColor = false;
+            modifyBtn.Click += modifyBtn_Click;
             // 
             // homeScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(591, 450);
+            ClientSize = new Size(677, 450);
+            Controls.Add(modifyBtn);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(deleteVaultBtn);
@@ -151,5 +165,6 @@
         private DataGridViewTextBoxColumn sqliteId;
         private Label label1;
         private Label label2;
+        private Button modifyBtn;
     }
 }
