@@ -101,7 +101,6 @@ namespace PassMan
             };
             if (manager.loginUser(user))
             {
-                Debug.WriteLine("Sikeres login");
                 homeScreen homeScreenForm = new homeScreen(manager); // todo ide kell beleírni, hogy mit adunk át
 
                 homeScreenForm.Show();
@@ -111,19 +110,23 @@ namespace PassMan
             }
             // ha nem sikerült a login
             MessageBox.Show("Sikertelen bejelentkezés!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Debug.WriteLine("azért lefutottt");
 
         }
 
         private void registerBtn_click(object sender, EventArgs e)
         {
-            Debug.WriteLine("ASDADASDASDASDADASD");
             Register registerForm = new Register();
             if (registerForm.ShowDialog() == DialogResult.OK)
             {
                 var newUser = registerForm.user;
-                manager.createNewUser(newUser);
-                MessageBox.Show("Sikeres regisztráció!", "Siker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool isSuccess = manager.createNewUser(newUser);
+                if(isSuccess)
+                {
+                    MessageBox.Show("Sikeres regisztráció!", "Regisztráció", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                MessageBox.Show("Sikertelen regisztráció!", "Regisztráció", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
         }

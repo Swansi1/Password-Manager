@@ -29,7 +29,7 @@ namespace PassMan.Core.DAO
             }
         }
 
-        public void AddUser(User user)
+        public bool AddUser(User user)
         {
             using (var context = new MyDbContext())
             {
@@ -38,8 +38,15 @@ namespace PassMan.Core.DAO
                 var newUser = user.ShallowCopy();
                 newUser.Password = encryptedPass;
 
+                var isUser = GetAllUsers().Find(u => u.Username == user.Username);
+                if (isUser != null)
+                {
+                    return false;
+                }
+
                 context.Users.Add(newUser);
                 context.SaveChanges();
+                return true;
             }
         }
 

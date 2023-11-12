@@ -37,5 +37,10 @@ namespace PassMan.Desktop.Views.authentication_screens
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        private void Register_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -176,6 +176,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "Register";
             Text = "Regisztráció";
+            Load += Register_Load;
             ResumeLayout(false);
             PerformLayout();
         }

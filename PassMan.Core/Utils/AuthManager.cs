@@ -14,9 +14,9 @@ namespace PassMan.Core.Utils
         public UserDAO dao = new UserDAO();
         public User loggedUser = null;
 
-        public void createNewUser(User user)
+        public bool createNewUser(User user)
         {
-            dao.AddUser(user);
+            return dao.AddUser(user);
         }
 
         public bool loginUser(User user)
